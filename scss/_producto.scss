@@ -1,0 +1,23 @@
+.productos{
+    display: flex;
+    padding: 10px;
+    background-color: rgb(35, 197, 130);
+    .fruta{
+        margin: 10px;
+        img{
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+        }
+    }
+}
+
+.totalFrutas{
+    width: 57.4%;
+    padding: 15px;
+    background-color: bisque;
+    #total{
+        background-color: white;
+        padding: 10px;
+    }
+}
