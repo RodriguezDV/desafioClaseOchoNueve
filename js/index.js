@@ -1,82 +1,53 @@
 const carrito = document.querySelector("#carrito");
-const array = [];
-
+let lista = JSON.parse(localStorage.getItem("listaProducto")) || []
+let total = 0;
 class Producto {
-    constructor(nombre, precio){
+    constructor(nombre, precio) {
         this.nombre = nombre;
         this.precio = precio;
     }
 }
-const producto1 = new Producto("Naranja", 30);
-const producto2 = new Producto("Banana", 50);
-const producto3 = new Producto("Pera", 50);
-const producto4 = new Producto("Tomate", 50);
-const producto5 = new Producto("Uva", 50)
+const producto1 = new Producto("Naranja", 150);
+const producto2 = new Producto("Banana", 250);
+const producto3 = new Producto("Pera", 300);
+const producto4 = new Producto("Tomate", 120);
+const producto5 = new Producto("Uva", 200);
 
-const naranja = document.querySelector("#naranja");
-naranja.onclick = (e) =>{
-    let total = 0;
+
+
+for (let i = 0; i < lista.length; i++) {
     let item = document.createElement("li");
-    item.innerText = `${producto1.nombre} $${producto1.precio}`
+    item.innerText = `${lista[i].nombre} $${lista[i].precio}`
     carrito.appendChild(item);
-    array.push(producto1);
-    for (let i=0; i < array.length; i++){
-        total += array[i].precio;
+    total += lista[i].precio;
+}
+document.querySelector("#total").innerText = `Total $${total}`
+
+function prod (fruta, producto) {
+    let click = document.querySelector(`#${fruta}`);
+    click.onclick = () => {
+        total = 0
+        let item = document.createElement("li");
+        item.innerText = `${producto.nombre} $${producto.precio}`
+        lista.push(producto);
+        localStorage.setItem("listaProducto", JSON.stringify(lista));
+        carrito.appendChild(item);
+        for (let i = 0; i < lista.length; i++) {
+            total += lista[i].precio;
+            document.querySelector("#total").innerText = `Total $${total}`
+        }
     }
-    document.querySelector("#total").innerText = `Total $${total}`
 }
 
-const banana = document.querySelector("#banana");
-banana.onclick = (e) =>{
-    let total = 0;
-    let item = document.createElement("li");
-    item.innerText = `${producto2.nombre} $${producto2.precio}`
-    carrito.appendChild(item);
-    array.push(producto2);
-    for (let i=0; i < array.length; i++){
-        total += array[i].precio;
-    }
-    document.querySelector("#total").innerText = `Total $${total}`
+document.querySelector("#btn").onclick = () => {
+    document.querySelector("#carrito").innerHTML = "";
+    localStorage.setItem("listaProducto", "[]");
+    document.querySelector("#total").innerText = "Total $0";
+    lista = [];
 }
 
-const pera = document.querySelector("#pera");
-pera.onclick = (e) =>{
-    let total = 0;
-    let item = document.createElement("li");
-    item.innerText = `${producto3.nombre} $${producto3.precio}`
-    carrito.appendChild(item);
-    array.push(producto3);
-    for (let i=0; i < array.length; i++){
-        total += array[i].precio;
-    }
-    document.querySelector("#total").innerText = `Total $${total}`
-}
-
-const tomate = document.querySelector("#tomate");
-tomate.onclick = (e) =>{
-    let total = 0;
-    let item = document.createElement("li");
-    item.innerText = `${producto4.nombre} $${producto4.precio}`
-    carrito.appendChild(item);
-    array.push(producto4);
-    for (let i=0; i < array.length; i++){
-        total += array[i].precio;
-    }
-    document.querySelector("#total").innerText = `Total $${total}`
-}
-
-const uva = document.querySelector("#uva");
-uva.onclick = (e) =>{
-    let total = 0;
-    let item = document.createElement("li");
-    item.innerText = `${producto5.nombre} $${producto5.precio}`
-    carrito.appendChild(item);
-    array.push(producto5);
-    for (let i=0; i < array.length; i++){
-        total += array[i].precio;
-    }
-    document.querySelector("#total").innerText = `Total $${total}`
-}
-
-
-
+prod("naranja", producto1);
+prod("banana", producto2);
+prod("pera", producto3);
+prod("tomate", producto4);
+prod("uva", producto5);
